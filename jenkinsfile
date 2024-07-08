@@ -16,10 +16,12 @@ pipeline {
 
         stage('Deploy') {
             steps {
-                 withCredentials([sshUserPrivateKey(credentialsId: 'counter-app-ssh-ec2', keyFileVariable: 'SSH_KEY', usernameVariable: 'SSH_USER')]) {
+                 withCredentials([sshUserPrivateKey(credentialsId: 'newinstance', keyFileVariable: 'SSH_KEY', usernameVariable: 'SSH_USER')]) {
                      sh '''
-                        scp -i $SSH_KEY -r build/* $SSH_USER@13.233.136.224:/var/www/html
-                        ssh -i $SSH_KEY $SSH_USER@13.233.136.224 'sudo systemctl restart httpd'
+                        mkdir -p ~/.ssh
+                        ssh-keyscan -H 13.201.3.212 >> ~/.ssh/known_hosts
+                        scp -i $SSH_KEY -r build/* $SSH_USER@13.201.3.212:/var/www/html
+                        ssh -i $SSH_KEY $SSH_USER@13.201.3.212 'sudo systemctl restart httpd'
                      '''
                  }   
             }
