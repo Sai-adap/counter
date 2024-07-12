@@ -1,2 +1,2 @@
 #!/bin/bash
-systemctl start counter
+systemctl start 
