@@ -24,11 +24,9 @@ jobs:
       - name: Build project
         run: npm run build # or your specific build command
 
-      - name: Archive build files
-        run: tar -czf build.tar.gz build # assuming your build output is in the 'build' directory
+      - name: build artifacts
+        run: '**/*'
 
-      - name: Upload build artifact
-        uses: actions/upload-artifact@v2
-        with:
-          name: build-artifact
-          path: build.tar.gz
+      - name: create build directry
+        run: build/
+       
