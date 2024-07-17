@@ -32,4 +32,5 @@ jobs:
         git config --global user.name "Sai-adap"
         git config --global user.email "saikumaradapa20@gmail.com"
         git commit -m "Automated build folder upload"
+        git add .
         git push 
