@@ -3,35 +3,22 @@ name: Upload Build Folder to S3
 on:
   push:
     branches:
-      - production  # Change this to your branch name if needed
+      - main
 
 jobs:
   upload:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+    - name: Checkout code
+      uses: actions/checkout@v4
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: '14'  # Change this to your Node.js version if needed
+    - name: Configure AWS credentials
+      uses: aws-actions/configure-aws-credentials@v2
+      with:
+        role-to-assume: arn:aws:iam::767397935218:role/counter-s3  # Replace with your IAM role ARN
+        aws-region: ap-south-1  # Change this to your AWS region
 
-      - name: Install dependencies
-        run: npm install
+    - name: Upload to S3
+      run: aws s3 sync build/ s3://counters3bucket/build/
 
-      - name: Build project
-        run: npm run build
-
-      - name: Archive build files
-        run: tar -czvf build.tar.gz build/
-
-      - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v2
-        with:
-          role-to-assume: arn:aws:iam::767397935218:role/counter-s3  # Replace with your IAM role ARN
-          aws-region: ap-south-1  # Change this to your AWS region
-
-      - name: Upload to S3
-        run: aws s3 cp build.tar.gz s3://counters3bucket/build.tar.gz
