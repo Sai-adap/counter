@@ -17,7 +17,7 @@ jobs:
       uses: aws-actions/configure-aws-credentials@v2
       with:
         role-to-assume: arn:aws:iam::767397935218:role/counter-s3   # Replace with your IAM role ARN
-        aws-region: us-west-2  # Change this to your AWS region
+        aws-region: ap-south-1  # Change this to your AWS region
 
     - name: Upload to S3
       run: aws s3 sync build/ s3://counters3bucket/build/
