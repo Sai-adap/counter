@@ -23,8 +23,7 @@ jobs:
         aws-region: ap-south-1
 
     - name: Upload to S3
-      uses: aws-actions/amazon-s3-copy@v1
-      with:
-          source: ./build  # Replace with your build folder path
-          bucket: counters3bucket  # Replace with your bucket name
-          acl: public-read  # Optional: Set object ACL
+    - name: Install AWS CLI
+      run: pip install awscli
+    - name: Upload to S3
+      run: aws s3 cp ./build s3://counters3bucket --recursive
