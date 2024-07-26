@@ -3,15 +3,17 @@ version: 0.2
 phases:
   install:
     runtime-versions:
-      nodejs: 12
+      nodejs: 14  # Adjust the Node.js version as per your project requirements
+    commands:
+      - npm install  # Install dependencies
+
   build:
     commands:
-      - echo "Building the application"
-      - npm install
-      - npm run build
-      - zip -r my-artifact.zip build/
+      - npm run build  # Build your React application
 
 artifacts:
   files:
-    - my-artifact.zip
+    - '**/*'  # Include all files in the artifact
+
+base-directory: build
 
